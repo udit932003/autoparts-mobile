@@ -14,12 +14,12 @@ import { Platform } from "react-native";
  *
  * Phone and computer must be on the SAME Wi-Fi.
  */
-const LAN_IP = "192.168.1.5"; // 👈 change to your computer's IP
+const LAN_IP = "192.168.1.5"; // 👈 change to your computer's IP (only needed for a real phone)
 
 export const API_BASE_URL =
-  Platform.OS === "android"
-    ? `http://${LAN_IP}:3000` // Android emulator can also use http://10.0.2.2:3000
-    : `http://${LAN_IP}:3000`;
+  Platform.OS === "web"
+    ? "http://localhost:3000" // running in the browser on the same laptop → localhost just works
+    : `http://${LAN_IP}:3000`; // real phone via Expo Go → must be your computer's LAN IP
 
 /** Turns a relative image path ("/products/x.svg") into a full URL. */
 export function imageUrl(path: string) {
