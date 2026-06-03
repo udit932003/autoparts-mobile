@@ -6,13 +6,13 @@ import {
   Pressable,
   StyleSheet,
   ActivityIndicator,
-  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import SvgImage from "../components/SvgImage";
 import ProductCard from "../components/ProductCard";
 import { fetchProduct } from "../api";
+import { useCart } from "../cart";
 import { colors, formatPrice } from "../theme";
 import type { Product, RootStackParamList } from "../types";
 
@@ -20,7 +20,9 @@ type Props = NativeStackScreenProps<RootStackParamList, "ProductDetail">;
 
 export default function ProductDetailScreen({ navigation, route }: Props) {
   const { slug } = route.params;
+  const { addItem } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
+  const [added, setAdded] = useState(false);
   const [related, setRelated] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -61,6 +63,12 @@ export default function ProductDetailScreen({ navigation, route }: Props) {
   }
 
   const inStock = product.stock > 0;
+
+  function handleAdd() {
+    addItem(product!, 1);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  }
 
   return (
     <SafeAreaView style={styles.safe} edges={["bottom"]}>
@@ -113,11 +121,13 @@ export default function ProductDetailScreen({ navigation, route }: Props) {
           <Text style={styles.barPrice}>{formatPrice(product.price)}</Text>
         </View>
         <Pressable
-          style={[styles.addBtn, !inStock && styles.addBtnDisabled]}
+          style={[styles.addBtn, !inStock && styles.addBtnDisabled, added && styles.addBtnAdded]}
           disabled={!inStock}
-          onPress={() => Alert.alert("Added to cart", `${product.name} added.\n(Cart is a demo in this app.)`)}
+          onPress={handleAdd}
         >
-          <Text style={styles.addBtnText}>{inStock ? "Add to cart" : "Out of stock"}</Text>
+          <Text style={styles.addBtnText}>
+            {!inStock ? "Out of stock" : added ? "✓ Added!" : "Add to cart"}
+          </Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -143,6 +153,7 @@ const styles = StyleSheet.create({
   barLabel: { fontSize: 11, color: colors.textMuted },
   barPrice: { fontSize: 18, fontWeight: "800", color: colors.text },
   addBtn: { backgroundColor: colors.brand, paddingHorizontal: 28, paddingVertical: 13, borderRadius: 999 },
+  addBtnAdded: { backgroundColor: colors.green },
   addBtnDisabled: { backgroundColor: colors.textMuted },
   addBtnText: { color: "#fff", fontWeight: "800", fontSize: 15 },
   retryBtn: { marginTop: 12, backgroundColor: colors.red, paddingHorizontal: 18, paddingVertical: 9, borderRadius: 8 },

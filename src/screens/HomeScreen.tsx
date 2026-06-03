@@ -12,6 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import SvgImage from "../components/SvgImage";
 import ProductCard from "../components/ProductCard";
+import CartButton from "../components/CartButton";
 import { fetchCategories, fetchProducts } from "../api";
 import { colors } from "../theme";
 import type { Category, Product, RootStackParamList } from "../types";
@@ -64,6 +65,7 @@ export default function HomeScreen({ navigation }: Props) {
               AutoParts<Text style={{ color: colors.brand }}>Hub</Text>
             </Text>
           </View>
+          <CartButton />
         </View>
 
         {/* Hero */}
@@ -131,7 +133,7 @@ export default function HomeScreen({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colors.bg },
-  header: { paddingHorizontal: 16, paddingTop: 6, paddingBottom: 4 },
+  header: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 16, paddingTop: 6, paddingBottom: 4 },
   logoRow: { flexDirection: "row", alignItems: "center", gap: 8 },
   logoMark: { width: 34, height: 34, borderRadius: 9, backgroundColor: colors.brand, alignItems: "center", justifyContent: "center" },
   logoMarkText: { fontSize: 16 },

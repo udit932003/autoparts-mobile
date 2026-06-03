@@ -25,4 +25,5 @@ export type RootStackParamList = {
   Home: undefined;
   Products: { category?: string; categoryName?: string; q?: string } | undefined;
   ProductDetail: { slug: string; name?: string };
+  Cart: undefined;
 };
