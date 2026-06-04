@@ -14,7 +14,7 @@ import { Platform } from "react-native";
  *
  * Phone and computer must be on the SAME Wi-Fi.
  */
-const LAN_IP = "192.168.1.5"; // 👈 change to your computer's IP (only needed for a real phone)
+const LAN_IP = "172.64.0.215"; // 👈 change to your computer's IP (only needed for a real phone)
 
 export const API_BASE_URL =
   Platform.OS === "web"

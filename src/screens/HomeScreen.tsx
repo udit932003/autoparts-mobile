@@ -13,6 +13,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import SvgImage from "../components/SvgImage";
 import ProductCard from "../components/ProductCard";
 import CartButton from "../components/CartButton";
+import FloatingContact from "../components/FloatingContact";
 import { fetchCategories, fetchProducts } from "../api";
 import { colors } from "../theme";
 import type { Category, Product, RootStackParamList } from "../types";
@@ -127,6 +128,7 @@ export default function HomeScreen({ navigation }: Props) {
           </>
         )}
       </ScrollView>
+      <FloatingContact />
     </SafeAreaView>
   );
 }
